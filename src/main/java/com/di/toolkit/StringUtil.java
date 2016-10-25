@@ -6,6 +6,8 @@ package com.di.toolkit;
  * @version
  */
 public class StringUtil {
+	public static final String lineSeparator = System.getProperty("line.separator", "\n");
+
 	public static String firstCharLower(String s) {
 		return s.substring(0, 1).toLowerCase() + s.substring(1);
 	}
