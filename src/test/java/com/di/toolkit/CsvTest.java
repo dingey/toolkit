@@ -1,9 +1,10 @@
 package com.di.toolkit;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import org.junit.Test;
 import com.di.toolkit.csv.CsvMapper;
 
 /**
@@ -12,16 +13,17 @@ import com.di.toolkit.csv.CsvMapper;
  * @version
  */
 public class CsvTest {
-	public static void main(String[] args) {
-		List<Person> ps=new ArrayList<>();
+	@Test
+	public void test() throws ParseException {
+		List<Person> ps = new ArrayList<>();
 		Person p = new Person();
 		p.setId(1);
 		p.setName("Alice");
 		p.setScore(5.123);
 		p.setCreate(new Date());
+		p.setBirthday(-1000000000000L);
 		ps.add(p);
 		ps.add(p);
 		System.out.println(new CsvMapper().pojosToCsvWithHead(ps));
-
 	}
 }
