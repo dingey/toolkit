@@ -21,8 +21,11 @@ public class Person {
 	@DecimalFormat
 	double score;
 	@DataColumn
-	@DateFormat(pattern="yyyy年MM月dd日 hh:mm:ss")
+	@DateFormat(pattern = "yyyy年MM月dd日 hh:mm:ss")
 	Date create;
+	@DataColumn
+	@DateFormat(pattern = "yyyy年MM月dd日")
+	long birthday;
 
 	public Date getCreate() {
 		return create;
@@ -62,6 +65,14 @@ public class Person {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public long getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(long birthday) {
+		this.birthday = birthday;
 	}
 
 }
