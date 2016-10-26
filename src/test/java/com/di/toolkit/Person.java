@@ -1,9 +1,7 @@
 package com.di.toolkit;
 
 import java.util.Date;
-
 import com.di.toolkit.data.annotation.DataColumn;
-import com.di.toolkit.data.annotation.DataWrapper;
 import com.di.toolkit.data.annotation.DateFormat;
 import com.di.toolkit.data.annotation.DecimalFormat;
 
@@ -23,7 +21,7 @@ public class Person {
 	@DecimalFormat
 	double score;
 	@DataColumn
-	@DateFormat
+	@DateFormat(pattern="yyyy年MM月dd日 hh:mm:ss")
 	Date create;
 
 	public Date getCreate() {

@@ -2,6 +2,7 @@ package com.di.toolkit.csv;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.di.toolkit.ClassUtil;
 import com.di.toolkit.StringUtil;
@@ -23,8 +24,13 @@ public class CsvMapper {
 					s.append(new SimpleDateFormat(f.getAnnotation(DateFormat.class).pattern())
 							.format(ClassUtil.getFieldValueByGetMethod(f, t))).append(",");
 				} else if (f.isAnnotationPresent(DecimalFormat.class)) {
-					s.append(new java.text.DecimalFormat(f.getAnnotation(DecimalFormat.class).pattern())
-							.format(ClassUtil.getFieldValueByGetMethod(f, t))).append(",");
+					if (f.getType() == java.lang.Long.class || f.getType() == long.class) {
+						s.append(new java.text.DecimalFormat(f.getAnnotation(DecimalFormat.class).pattern())
+								.format(new Date((long) ClassUtil.getFieldValueByGetMethod(f, t)))).append(",");
+					} else {
+						s.append(new java.text.DecimalFormat(f.getAnnotation(DecimalFormat.class).pattern())
+								.format(ClassUtil.getFieldValueByGetMethod(f, t))).append(",");
+					}
 				} else {
 					s.append(ClassUtil.getFieldValueByGetMethod(f, t)).append(",");
 				}
