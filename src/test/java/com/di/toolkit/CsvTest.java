@@ -23,6 +23,6 @@ public class CsvTest {
 		p.setBirthday(-1000000000000L);
 		ps.add(p);
 		ps.add(p);
-		System.out.println(new CsvMapper().pojosToCsvWithHead(ps));
+		System.out.println(CsvMapper.pojosToCsvWithHead(ps));
 	}
 }
