@@ -16,7 +16,7 @@ import com.di.toolkit.data.annotation.DecimalFormat;
  * @version
  */
 public class CsvMapper {
-	public <T> String pojoToCsvWithoutHead(T t) {
+	public static <T> String pojoToCsvWithoutHead(T t) {
 		StringBuilder s = new StringBuilder();
 		for (Field f : t.getClass().getDeclaredFields()) {
 			if (f.isAnnotationPresent(DataColumn.class)) {
@@ -39,7 +39,7 @@ public class CsvMapper {
 		return s.toString();
 	}
 
-	public <T> String getPojoToCsvHead(T t) {
+	public static <T> String getPojoToCsvHead(T t) {
 		StringBuilder s = new StringBuilder();
 		for (Field f : t.getClass().getDeclaredFields()) {
 			if (f.isAnnotationPresent(DataColumn.class)) {
@@ -53,7 +53,7 @@ public class CsvMapper {
 		return s.toString();
 	}
 
-	public <T> String pojosToCsvWithoutHead(List<T> list) {
+	public static <T> String pojosToCsvWithoutHead(List<T> list) {
 		if (list == null || list.size() == 0) {
 			return null;
 		}
@@ -65,7 +65,7 @@ public class CsvMapper {
 		return s.toString();
 	}
 
-	public <T> String pojosToCsvWithHead(List<T> list) {
+	public static <T> String pojosToCsvWithHead(List<T> list) {
 		if (list == null || list.size() == 0) {
 			return null;
 		}
