@@ -33,11 +33,12 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
-/** 
-* @author  di: 
-* @date 创建时间：2016年10月23日 下午5:06:49 
-* @version
-*/
+
+/**
+ * @author di:
+ * @date 创建时间：2016年10月23日 下午5:06:49
+ * @version
+ */
 @SuppressWarnings("deprecation")
 public class HttpClientUtil {
 	private static PoolingHttpClientConnectionManager connMgr;
@@ -61,6 +62,7 @@ public class HttpClientUtil {
 		configBuilder.setAuthenticationEnabled(true);
 		requestConfig = configBuilder.build();
 	}
+
 	public static String get(String url) {
 		CloseableHttpClient httpClient = null;
 		String res = null;
@@ -102,8 +104,10 @@ public class HttpClientUtil {
 		HttpPost httppost = new HttpPost(url);
 		// 创建参数队列
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for (String param : params.keySet()) {
-			formparams.add(new BasicNameValuePair(param, params.get(param)));
+		if (params != null) {
+			for (String param : params.keySet()) {
+				formparams.add(new BasicNameValuePair(param, params.get(param)));
+			}
 		}
 		UrlEncodedFormEntity uefEntity;
 		try {
@@ -146,9 +150,11 @@ public class HttpClientUtil {
 		try {
 			httpPost.setConfig(requestConfig);
 			List<NameValuePair> pairList = new ArrayList<NameValuePair>(params.size());
-			for (Map.Entry<String, String> entry : params.entrySet()) {
-				NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry.getValue().toString());
-				pairList.add(pair);
+			if (params != null) {
+				for (Map.Entry<String, String> entry : params.entrySet()) {
+					NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry.getValue().toString());
+					pairList.add(pair);
+				}
 			}
 			httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("utf-8")));
 			response = httpClient.execute(httpPost);
@@ -189,7 +195,7 @@ public class HttpClientUtil {
 					return true;
 				}
 			}).build();
-			sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {				
+			sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {
 				public boolean verify(String arg0, SSLSession arg1) {
 					return true;
 				}
