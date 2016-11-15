@@ -37,8 +37,8 @@ public class JacksonUtil {
 	/*
 	 * JSON转Java类[JSON反序列化]
 	 */
-	public static Object jsonToPojo(String json, Class<?> c) {
-		Object o = null;
+	public static <T> T jsonToPojo(String json, Class<T> c) {
+		T o = null;
 		try {
 			o = OBJECT_MAPPER.readValue(json, c);
 		} catch (IOException e) {
@@ -47,8 +47,8 @@ public class JacksonUtil {
 		return o;
 	}
 
-	public static Object xmlToPojo(String xml, Class<?> c) {
-		Object o = null;
+	public static <T> T xmlToPojo(String xml, Class<T> c) {
+		T o = null;
 		try {
 			o = XML_MAPPER.readValue(xml, c);
 		} catch (IOException e) {
