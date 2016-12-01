@@ -51,7 +51,7 @@ public class ClassesUtil {
 	 * @param name
 	 */
 	@SuppressWarnings("rawtypes")
-	private static ArrayList<Class> getAllClass(String packagename) {
+	public static ArrayList<Class> getAllClass(String packagename) {
 		ArrayList<Class> list = new ArrayList<>();
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		String path = packagename.replace('.', '/');
