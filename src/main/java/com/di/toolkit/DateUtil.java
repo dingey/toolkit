@@ -7,10 +7,20 @@ import java.util.Date;
  * @author di
  */
 public class DateUtil {
+	/**
+	 * 获取现在时间
+	 * 
+	 * @return
+	 */
 	public static Date getCurrentDate() {
 		return new Date();
 	}
 
+	/**
+	 * 获取今天零点时间
+	 * 
+	 * @return
+	 */
 	public static Date getCurrentZeroDate() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(getCurrentDate());
@@ -21,10 +31,23 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 
+	/**
+	 * 获取距当前时间几天后的时间
+	 * 
+	 * @param days
+	 * @return
+	 */
 	public static Date getDaysLater(int days) {
 		return getDaysLater(getCurrentDate(), days);
 	}
 
+	/**
+	 * 获取指定时间date几天后的时间
+	 * 
+	 * @param date指定时间
+	 * @param days几天后,如果要几天前，请输入负数
+	 * @return
+	 */
 	public static Date getDaysLater(Date date, int days) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -32,10 +55,23 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 
+	/**
+	 * 获取当前时间几周后的时间
+	 * 
+	 * @param weeks几周，负数表示前几周
+	 * @return
+	 */
 	public static Date getWeeksLater(int weeks) {
 		return getWeeksLater(getCurrentDate(), weeks);
 	}
 
+	/**
+	 * 获取指定时间date几周后的时间
+	 * 
+	 * @param date指定时间
+	 * @param weeks几周
+	 * @return
+	 */
 	public static Date getWeeksLater(Date date, int weeks) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -43,10 +79,21 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 
+	/**
+	 * 获取当前时间几月后的时间
+	 * 
+	 * @param months几月
+	 * @return
+	 */
 	public static Date getMonthsLater(int months) {
 		return getMonthsLater(getCurrentDate(), months);
 	}
-
+	/**
+	 * 获取指定时间date几月
+	 * @param date
+	 * @param months
+	 * @return
+	 */
 	public static Date getMonthsLater(Date date, int months) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
