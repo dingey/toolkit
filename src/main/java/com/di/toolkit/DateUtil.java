@@ -88,8 +88,10 @@ public class DateUtil {
 	public static Date getMonthsLater(int months) {
 		return getMonthsLater(getCurrentDate(), months);
 	}
+
 	/**
 	 * 获取指定时间date几月
+	 * 
 	 * @param date
 	 * @param months
 	 * @return
@@ -175,4 +177,15 @@ public class DateUtil {
 		return days;
 	}
 
+	public static Date getSecondsLater(int seconds) {
+		return new Date(new Date().getTime() + seconds * 1000);
+	}
+
+	public static Date getMinutesLater(int minutes) {
+		return getSecondsLater(minutes * 60);
+	}
+
+	public static Date getHoursLater(int hours) {
+		return getMinutesLater(hours * 60);
+	}
 }
