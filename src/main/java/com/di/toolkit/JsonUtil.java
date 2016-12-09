@@ -36,6 +36,30 @@ public class JsonUtil {
 		return l;
 	}
 
+	private static String[] sptList(String str) {
+		List<String> ls = new ArrayList<>();
+		int of = 0;
+		int of_ = 0;
+		while (of != -1) {
+			int next = str.indexOf(",", of + 1);
+			char c = str.charAt(next + 1);
+			if (c == '{' && next != -1) {
+				of_ = next;
+				String s0 = str.substring(of == 0 ? 0 : (of + 1), next);
+				ls.add(s0);
+			} else if (next == -1) {
+				String s0 = str.substring(of_ + 1);
+				ls.add(s0);
+			}
+			of = next;
+		}
+		String[] l = new String[ls.size()];
+		for (int i = 0; i < l.length; i++) {
+			l[i] = ls.get(i);
+		}
+		return l;
+	}
+
 	private static Map<String, Object> toMap(String str) {
 		HashMap<String, Object> m = new HashMap<>();
 		String s0 = str.substring(str.indexOf("{") + 1, str.lastIndexOf("}"));
@@ -50,7 +74,9 @@ public class JsonUtil {
 		String s0 = str.substring(str.indexOf("[") + 1, str.lastIndexOf("]") - 1);
 		List<Object> ls = new ArrayList<>();
 		if (s0.startsWith("{")) {
-			ls.add(toMap(s0));
+			for (String s1 : sptList(s0)) {
+				ls.add(toMap(s1));
+			}
 		} else if (s0.startsWith("\"")) {
 			for (String s : s0.split(",")) {
 				ls.add(s.replaceAll("\"", ""));
