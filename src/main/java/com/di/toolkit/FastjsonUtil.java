@@ -12,8 +12,7 @@ public class FastjsonUtil {
 		return JSON.toJSONString(o);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object parseObject(String jsonString, Class c) {
+	public static <T> T parseObject(String jsonString, Class<T> c) {
 		return JSON.parseObject(jsonString, c);
 	}
 }
