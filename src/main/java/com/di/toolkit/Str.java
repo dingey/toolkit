@@ -37,4 +37,16 @@ public class Str {
 		return s.toString();
 	}
 
+	public void deleteLastChar() {
+		if (s != null && s.length() > 0) {
+			s.delete(s.length() - 1, s.length());
+		}
+	}
+
+	public void deleteFirstChar() {
+		if (s != null && s.length() > 0) {
+			s.delete(0, 1);
+		}
+	}
+
 }
