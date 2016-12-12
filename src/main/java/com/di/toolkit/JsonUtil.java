@@ -15,11 +15,11 @@ import java.util.Map;
 public class JsonUtil {
 	public static List<String> split(String json) {
 		int off = 0;
-		int ang1 = 0;// 尖括号{
-		int ang2 = 0;// 尖括号}
-		int squa1 = 0;// 方括号[
-		int squa2 = 0;// 方括号]
-		int quot = 0;// 引号
+		int ang1 = 0;// {
+		int ang2 = 0;// }
+		int squa1 = 0;// [
+		int squa2 = 0;// ]
+		int quot = 0;// "
 		List<Integer> is = new ArrayList<>();
 		List<String> ss = new ArrayList<>();
 		while (off < json.length()) {
@@ -77,11 +77,11 @@ public class JsonUtil {
 
 	public static List<String> splitList(String str) {
 		int off = 0;
-		int ang1 = 0;// 尖括号{
-		int ang2 = 0;// 尖括号}
-		int squa1 = 0;// 方括号[
-		int squa2 = 0;// 方括号]
-		int quot = 0;// 引号
+		int ang1 = 0;// {
+		int ang2 = 0;// }
+		int squa1 = 0;// [
+		int squa2 = 0;// ]
+		int quot = 0;// "
 		List<Integer> is = new ArrayList<Integer>();
 		List<String> ss = new ArrayList<String>();
 		while (off < str.length()) {
@@ -207,10 +207,10 @@ public class JsonUtil {
 					for (Object object : os) {
 						s1.append(toJson(object)).append(",");
 					}
-					s.append("\"").append(f.getName()).append("\":[").append(s1.toString().substring(0, s1.length() - 1))
-							.append("],");
+					s.append("\"").append(f.getName()).append("\":[")
+							.append(s1.toString().substring(0, s1.length() - 1)).append("],");
 				} else if (f.getType() == java.lang.String.class) {
-					s.append("\"").append(f.getName()).append("\":\"").append((String)f.get(o)).append("\",");
+					s.append("\"").append(f.getName()).append("\":\"").append((String) f.get(o)).append("\",");
 				} else if (f.getType() instanceof Object) {
 					s.append("\"").append(f.getName()).append("\":").append(toJson(f.get(o))).append(",");
 				}
