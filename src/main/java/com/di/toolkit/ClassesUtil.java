@@ -61,7 +61,7 @@ public class ClassesUtil {
 			 * 这里面的路径使用的是相对路径 如果大家在测试的时候获取不到，请理清目前工程所在的路径 使用相对路径更加稳定！
 			 * 另外，路径中切不可包含空格、特殊字符等
 			 */
-			Enumeration<URL> enumeration = classLoader.getResources("../bin/" + path);
+			Enumeration<URL> enumeration = classLoader.getResources("" + path);
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 				fileList.add(new File(url.getFile()));
