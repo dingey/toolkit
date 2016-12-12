@@ -74,24 +74,67 @@ public class JsonUtil {
 		return ss;
 	}
 
-	private static List<String> sptList(String str) {
-		List<String> ls = new ArrayList<>();
-		int of = 0;
-		int of_ = 0;
-		while (of != -1) {
-			int next = str.indexOf(",", of + 1);
-			char c = str.charAt(next + 1);
-			if (c == '{' && next != -1) {
-				of_ = next;
-				String s0 = str.substring(of == 0 ? 0 : (of + 1), next);
-				ls.add(s0);
-			} else if (next == -1) {
-				String s0 = str.substring(of_ + 1);
-				ls.add(s0);
+	public static List<String> splitList(String str) {
+		int off = 0;
+		int ang1 = 0;// 尖括号{
+		int ang2 = 0;// 尖括号}
+		int squa1 = 0;// 方括号[
+		int squa2 = 0;// 方括号]
+		int quot = 0;// 引号
+		List<Integer> is = new ArrayList<Integer>();
+		List<String> ss = new ArrayList<String>();
+		while (off < str.length()) {
+			char c = str.charAt(off);
+			switch (c) {
+			case '"':
+				if (off == 0 || str.charAt(off - 1) != '\\') {
+					quot++;
+				}
+				break;
+			case '{':
+				if (quot % 2 == 0) {
+					ang1++;
+				}
+				break;
+			case '}':
+				if (quot % 2 == 0) {
+					ang2++;
+				}
+				break;
+			case '[':
+				if (quot % 2 == 0) {
+					squa1++;
+				}
+				break;
+			case ']':
+				if (quot % 2 == 0) {
+					squa2++;
+				}
+				break;
+			case ',':
+				if (quot % 2 == 0 && ang1 == ang2 && squa1 == squa2 && str.charAt(off - 1) == '}'
+						&& str.charAt(off + 1) == '{') {
+					is.add(off);
+				}
+				break;
+			default:
+				break;
 			}
-			of = next;
+			off++;
 		}
-		return ls;
+		if (is.size() > 1) {
+			ss.add(str.substring(0, is.get(0)));
+			for (int i = 0; i < is.size() - 1; i++) {
+				ss.add(str.substring(is.get(i) + 1, is.get(i + 1)));
+			}
+			ss.add(str.substring(is.get(is.size() - 1) + 1));
+		} else if (is.size() == 1) {
+			ss.add(str.substring(0, is.get(0)));
+			ss.add(str.substring(is.get(0) + 1));
+		} else {
+			ss.add(str);
+		}
+		return ss;
 	}
 
 	private static Map<String, Object> toMap(String str) {
@@ -108,7 +151,7 @@ public class JsonUtil {
 		String s0 = str.substring(str.indexOf("[") + 1, str.lastIndexOf("]"));
 		List<Object> ls = new ArrayList<>();
 		if (s0.startsWith("{")) {
-			for (String s1 : sptList(s0)) {
+			for (String s1 : splitList(s0)) {
 				ls.add(toMap(s1));
 			}
 		} else if (s0.startsWith("\"")) {
