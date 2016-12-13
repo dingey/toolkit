@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月24日 下午11:05:39
- * @version
+ * @author di
  */
 public class ClassUtil {
 	public static <T> Object invokeMethod(Method m, T o, Object... args) {

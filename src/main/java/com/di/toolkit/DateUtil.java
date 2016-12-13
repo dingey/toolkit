@@ -19,7 +19,7 @@ public class DateUtil {
 	/**
 	 * 获取今天零点时间
 	 * 
-	 * @return
+	 * @return 今天零点时间
 	 */
 	public static Date getCurrentZeroDate() {
 		Calendar calendar = Calendar.getInstance();
@@ -35,7 +35,8 @@ public class DateUtil {
 	 * 获取距当前时间几天后的时间
 	 * 
 	 * @param days
-	 * @return
+	 *            几天
+	 * @return 距当前时间几天后的时间
 	 */
 	public static Date getDaysLater(int days) {
 		return getDaysLater(getCurrentDate(), days);
@@ -44,9 +45,11 @@ public class DateUtil {
 	/**
 	 * 获取指定时间date几天后的时间
 	 * 
-	 * @param date指定时间
-	 * @param days几天后,如果要几天前，请输入负数
-	 * @return
+	 * @param date
+	 *            指定时间
+	 * @param days
+	 *            几天后,如果要几天前，请输入负数
+	 * @return 指定时间date几天后的时间
 	 */
 	public static Date getDaysLater(Date date, int days) {
 		Calendar calendar = Calendar.getInstance();
@@ -58,8 +61,9 @@ public class DateUtil {
 	/**
 	 * 获取当前时间几周后的时间
 	 * 
-	 * @param weeks几周，负数表示前几周
-	 * @return
+	 * @param weeks
+	 *            几周，负数表示前几周
+	 * @return 当前时间几周后的时间
 	 */
 	public static Date getWeeksLater(int weeks) {
 		return getWeeksLater(getCurrentDate(), weeks);
@@ -68,9 +72,11 @@ public class DateUtil {
 	/**
 	 * 获取指定时间date几周后的时间
 	 * 
-	 * @param date指定时间
-	 * @param weeks几周
-	 * @return
+	 * @param date
+	 *            指定时间
+	 * @param weeks
+	 *            几周
+	 * @return 指定时间date几周后的时间
 	 */
 	public static Date getWeeksLater(Date date, int weeks) {
 		Calendar calendar = Calendar.getInstance();
@@ -82,8 +88,9 @@ public class DateUtil {
 	/**
 	 * 获取当前时间几月后的时间
 	 * 
-	 * @param months几月
-	 * @return
+	 * @param months
+	 *            几月
+	 * @return 当前时间几月后的时间
 	 */
 	public static Date getMonthsLater(int months) {
 		return getMonthsLater(getCurrentDate(), months);
@@ -93,8 +100,10 @@ public class DateUtil {
 	 * 获取指定时间date几月
 	 * 
 	 * @param date
+	 *            指定时间
 	 * @param months
-	 * @return
+	 *            几月
+	 * @return 指定时间date几月
 	 */
 	public static Date getMonthsLater(Date date, int months) {
 		Calendar calendar = Calendar.getInstance();

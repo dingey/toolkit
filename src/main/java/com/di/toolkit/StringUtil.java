@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月24日 下午11:21:45
- * @version
+ * @author di
  */
 public class StringUtil {
 	public static final String lineSeparator = System.getProperty("line.separator", "\n");
@@ -49,12 +47,6 @@ public class StringUtil {
 		return result;
 	}
 
-	/**
-	 * 把Map转换成get请求参数类型,如 {"name"=20,"age"=30} 转换后变成 name=20&age=30
-	 * 
-	 * @param map
-	 * @return
-	 */
 	public static String mapToGet(Map<? extends Object, ? extends Object> map) {
 		String result = "";
 		if (map == null || map.size() == 0) {
@@ -68,12 +60,6 @@ public class StringUtil {
 		return isBlank(result) ? result : result.substring(0, result.length() - 1);
 	}
 
-	/**
-	 * 把一串参数字符串,转换成Map 如"?a=3&b=4" 转换为Map{a=3,b=4}
-	 * 
-	 * @param args
-	 * @return
-	 */
 	public static Map<String, ? extends Object> getToMap(String args) {
 		if (isBlank(args)) {
 			return null;
@@ -125,12 +111,6 @@ public class StringUtil {
 		return money;
 	}
 
-	/**
-	 * 字符串转urlcode
-	 * 
-	 * @param value
-	 * @return
-	 */
 	public static String strToUrlcode(String value, String encode) {
 		try {
 			value = java.net.URLEncoder.encode(value, encode == null ? "utf-8" : encode);
@@ -141,12 +121,6 @@ public class StringUtil {
 		}
 	}
 
-	/**
-	 * urlcode转字符串
-	 * 
-	 * @param value
-	 * @return
-	 */
 	public static String urlcodeToStr(String value, String encode) {
 		try {
 			value = java.net.URLDecoder.decode(value, encode == null ? "utf-8" : encode);

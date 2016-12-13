@@ -11,9 +11,7 @@ import com.di.toolkit.data.annotation.DateFormat;
 import com.di.toolkit.data.annotation.DecimalFormat;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月24日 下午10:46:46
- * @version
+ * @author di
  */
 public class CsvMapper {
 	public static <T> String pojoToCsvWithoutHead(T t) {

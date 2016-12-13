@@ -12,9 +12,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月23日 下午4:34:20
- * @version
+ * @author di
  */
 public class JacksonUtil {
 	static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -87,7 +85,7 @@ public class JacksonUtil {
 		}
 		return null;
 	}
-	
+
 	public static List<Map<String, String>> csvWithHeadToMap(String csvContent) {
 		try {
 			CsvSchema schema = CsvSchema.emptySchema().withHeader();
@@ -102,12 +100,13 @@ public class JacksonUtil {
 
 	public static <T> String pojoToCsvWithHead(String[] columns, T o) {
 		try {
-			StringBuilder sb=new StringBuilder();
-			for(String s:columns){
+			StringBuilder sb = new StringBuilder();
+			for (String s : columns) {
 				sb.append(s).append(",");
 			}
-			CsvSchema csvSchema = CSV_MAPPER.schemaFor(o.getClass());	
-			String s=sb.substring(0, sb.length()-1)+System.getProperty("line.separator", "\n")+CSV_MAPPER.writer(csvSchema).writeValueAsString(o);			
+			CsvSchema csvSchema = CSV_MAPPER.schemaFor(o.getClass());
+			String s = sb.substring(0, sb.length() - 1) + System.getProperty("line.separator", "\n")
+					+ CSV_MAPPER.writer(csvSchema).writeValueAsString(o);
 			return s;
 		} catch (IOException e) {
 			e.printStackTrace();

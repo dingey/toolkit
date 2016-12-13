@@ -10,8 +10,6 @@ import java.util.Properties;
 
 /**
  * @author di
- * @date 2016年11月15日 下午2:50:40
- * @since 1.0.0
  */
 public class Property {
 	private HashMap<String, String> props;

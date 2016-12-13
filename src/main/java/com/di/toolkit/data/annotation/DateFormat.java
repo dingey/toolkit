@@ -6,9 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月24日 下午10:59:57
- * @version
+ * @author di
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -35,9 +35,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
 /**
- * @author di:
- * @date 创建时间：2016年10月23日 下午5:06:49
- * @version
+ * @author di
  */
 @SuppressWarnings("deprecation")
 public class HttpClientUtil {

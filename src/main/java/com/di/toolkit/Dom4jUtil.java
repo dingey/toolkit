@@ -10,11 +10,9 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-/** 
-* @author  di: 
-* @date 创建时间：2016年10月23日 下午4:32:20 
-* @version
-*/
+/**
+ * @author di
+ */
 public class Dom4jUtil {
 	public static HashMap<String, Object> xmlStringToMap(String xml) {
 		HashMap<String, Object> m = new HashMap<String, Object>();

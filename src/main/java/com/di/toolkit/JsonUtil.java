@@ -177,6 +177,31 @@ public class JsonUtil {
 	public static String toJson(Object o) {
 		StringBuilder s = new StringBuilder("{");
 		try {
+			if (o.getClass() == java.util.Map.class || o.getClass() == java.util.HashMap.class) {
+				Map<?, ?> m = (Map<?, ?>) o;
+				for (Object key : m.keySet()) {
+					Object val = m.get(key);
+					if (val.getClass() == java.lang.String.class) {
+						s.append("\"").append(key).append("\":\"").append(val).append("\",");
+					} else if (val.getClass() == java.lang.Byte.class || val.getClass() == java.lang.Short.class
+							|| val.getClass() == java.lang.Integer.class || val.getClass() == java.lang.Long.class
+							|| val.getClass() == java.lang.Double.class || val.getClass() == java.lang.Float.class
+							|| val.getClass() == java.lang.Boolean.class || val.getClass() == boolean.class
+							|| val.getClass() == byte.class || val.getClass() == short.class
+							|| val.getClass() == int.class || val.getClass() == long.class
+							|| val.getClass() == double.class || val.getClass() == float.class) {
+						s.append("\"").append(key).append("\":").append(val).append(",");
+					} else if (val.getClass() == java.util.Date.class) {
+						s.append("\"").append(key).append("\":\"")
+								.append(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(val)).append("\",");
+					} else {
+						s.append("\"").append(key).append("\":").append(toJson(val)).append(",");
+					}
+				}
+				s = new StringBuilder(s.toString().substring(0, s.length() - 1));
+				s.append("}");
+				return s.toString();
+			}
 			Field[] fs = o.getClass().getDeclaredFields();
 			for (Field f : fs) {
 				f.setAccessible(true);
