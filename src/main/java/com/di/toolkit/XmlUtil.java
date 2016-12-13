@@ -161,4 +161,32 @@ public class XmlUtil {
 		return ss;
 	}
 
+	public static enum XmlEscape {
+		AND('&', "a"), LESS('<', "&lt;"), GREAT('>', "&gt;"), QUOT('"', "&quot;"), APOS('\'', "&apos;");
+		private char ch;
+		private String value;
+
+		private XmlEscape(char ch, String value) {
+			this.value = value;
+			this.ch = ch;
+		}
+
+		public static String escape(char c) {
+			for (XmlEscape xe : XmlEscape.values()) {
+				if (xe.ch == c) {
+					return xe.value;
+				}
+			}
+			return null;
+		}
+
+		public static char unEscape(String s) {
+			for (XmlEscape xe : XmlEscape.values()) {
+				if (xe.value.equals(s)) {
+					return xe.ch;
+				}
+			}
+			return ' ';
+		}
+	}
 }
