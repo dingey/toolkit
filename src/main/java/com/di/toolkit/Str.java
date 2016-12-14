@@ -11,6 +11,11 @@ public class Str {
 		return this;
 	}
 
+	public Str add(Object o) {
+		s.append(String.valueOf(o));
+		return this;
+	}
+
 	public Str line(String str) {
 		return add(str).newLine();
 	}
@@ -35,16 +40,22 @@ public class Str {
 		return s.toString();
 	}
 
-	public void deleteLastChar() {
+	public Str deleteLastChar() {
 		if (s != null && s.length() > 0) {
 			s.delete(s.length() - 1, s.length());
 		}
+		return this;
 	}
 
-	public void deleteFirstChar() {
+	public Str deleteFirstChar() {
 		if (s != null && s.length() > 0) {
 			s.delete(0, 1);
 		}
+		return this;
 	}
 
+	public Str replaceFirst(String oldStr, String newStr) {
+		s = new StringBuilder(s.toString().replaceFirst(oldStr, newStr));
+		return this;
+	}
 }

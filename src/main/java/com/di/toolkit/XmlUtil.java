@@ -1,9 +1,12 @@
 package com.di.toolkit;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.di.toolkit.data.annotation.Alias;
 
 /**
  * @author di
@@ -11,6 +14,103 @@ import java.util.Map;
 public class XmlUtil {
 	public static String start = "<![CDATA[";
 	public static String end = "]]>";
+
+	public static <T> String toXml(T o) {
+		String n = StringUtil.firstCharLower(o.getClass().getSimpleName());
+		if (o.getClass().isAnnotationPresent(Alias.class)) {
+			if (!o.getClass().getAnnotation(Alias.class).xml().isEmpty()) {
+				n = o.getClass().getAnnotation(Alias.class).xml();
+			} else if (!o.getClass().getAnnotation(Alias.class).value().isEmpty()) {
+				n = o.getClass().getAnnotation(Alias.class).value();
+			}
+		}
+		Str str = new Str();
+		str.add("<").add(n).add(">");
+		if (o.getClass() == byte.class || o.getClass() == short.class || o.getClass() == int.class
+				|| o.getClass() == long.class || o.getClass() == double.class || o.getClass() == float.class
+				|| o.getClass() == java.lang.Byte.class || o.getClass() == java.lang.Short.class
+				|| o.getClass() == java.lang.Integer.class || o.getClass() == java.lang.Long.class
+				|| o.getClass() == java.lang.Double.class || o.getClass() == java.lang.Float.class
+				|| o.getClass() == boolean.class || o.getClass() == java.lang.Boolean.class
+				|| o.getClass() == java.lang.String.class || o.getClass() == java.lang.Character.class) {
+			str.add(o).add("</").add(n).add(">");
+			return str.toString();
+		} else if (o.getClass().isArray()) {
+			str.add("<").add(n).add(">");
+			List<?> os = (List<?>) o;
+			for (Object o0 : os) {
+				str.add(toXml(o0));
+			}
+			str.add("</").add(n).add(">");
+		} else if (o.getClass() == java.util.Map.class || o.getClass() == java.util.HashMap.class) {
+			Map<?, ?> m0 = (Map<?, ?>) o;
+			for (Object key : m0.keySet()) {
+				str.add(toXml(m0.get(key)));
+			}
+		} else if (o instanceof Object) {
+			try {
+				for (Field f : o.getClass().getDeclaredFields()) {
+					f.setAccessible(true);
+					if (f.get(o) == null) {
+						continue;
+					}
+					String n0 = f.getName();
+					if (n0.equals("attributes")) {
+						Object attr = f.get(o);
+						Str str1 = new Str();
+						for (Field ff : attr.getClass().getDeclaredFields()) {
+							ff.setAccessible(true);
+							String nn = ff.getName();
+							if (ff.isAnnotationPresent(Alias.class)) {
+								if (!ff.getAnnotation(Alias.class).xml().isEmpty()) {
+									nn = ff.getAnnotation(Alias.class).xml();
+								} else if (!ff.getAnnotation(Alias.class).value().isEmpty()) {
+									nn = ff.getAnnotation(Alias.class).value();
+								}
+							}
+							str1.add(nn).add("=\"").add(ff.get(attr)).add("\" ");
+						}
+						str.replaceFirst("<" + n + ">", "<" + n + " " + str1.deleteLastChar().toString() + ">");
+						continue;
+					}
+					if (f.isAnnotationPresent(Alias.class)) {
+						if (!f.getAnnotation(Alias.class).xml().isEmpty()) {
+							n0 = f.getAnnotation(Alias.class).xml();
+						} else if (!f.getAnnotation(Alias.class).value().isEmpty()) {
+							n0 = f.getAnnotation(Alias.class).value();
+						}
+					}
+					if (f.getType() == byte.class || f.getType() == short.class || f.getType() == int.class
+							|| f.getType() == long.class || f.getType() == double.class || f.getType() == float.class
+							|| f.getType() == java.lang.Byte.class || f.getType() == java.lang.Short.class
+							|| f.getType() == java.lang.Integer.class || f.getType() == java.lang.Long.class
+							|| f.getType() == java.lang.Double.class || f.getType() == java.lang.Float.class
+							|| f.getType() == boolean.class || f.getType() == java.lang.Boolean.class
+							|| f.getType() == java.lang.String.class || f.getType() == java.lang.Character.class) {
+						str.add("<").add(n0).add(">").add(f.get(o)).add("</").add(n0).add(">");
+					} else if (f.getType().isArray()) {
+						str.add("<").add(n0).add(">");
+						List<?> os = (List<?>) f.get(o);
+						for (Object o0 : os) {
+							str.add(toXml(o0));
+						}
+						str.add("</").add(n0).add(">");
+					} else if (f.getType() == java.util.Map.class || f.getType() == java.util.HashMap.class) {
+						Map<?, ?> m0 = (Map<?, ?>) f.get(o);
+						for (Object key : m0.keySet()) {
+							str.add(m0.get(key));
+						}
+					} else if (f.getType() instanceof Object) {
+						str.add(toXml(f.get(o)));
+					}
+				}
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		str.add("</").add(n).add(">");
+		return str.toString();
+	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T toObject(String xml, Class<T> cl) {
