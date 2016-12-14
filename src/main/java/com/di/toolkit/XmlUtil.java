@@ -37,27 +37,12 @@ public class XmlUtil {
 
 	@SuppressWarnings("unchecked")
 	private static <T> void set(Map<String, Object> m, T o) {
-		Map<String, Object> m0 = (Map<String, Object>) m.get("element attributes");
-		m.remove("element attributes");
-		if (m0 != null) {
-			try {
-				Field f = o.getClass().getDeclaredField("attributes");
-				f.setAccessible(true);
-				Class<?> c1 = f.getType();
-				Object fo = c1.getConstructor().newInstance();
-				ClassUtil.setObjectFieldsValue(m0, fo);
-				f.set(o, fo);
-			} catch (NoSuchFieldException | SecurityException | InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-				e.printStackTrace();
-			}
-		}
 		ClassUtil.setObjectFieldsValue(m, o);
 	}
 
 	public static Map<String, Object> toMap(String xml) {
 		Map<String, Object> m = new HashMap<>();
-		m.put("element attributes", getAttributes(xml));
+		m.put("attributes", getAttributes(xml));
 		if (getWrapperValue(xml).indexOf("<") == -1) {
 			m.put(getWrapperName(xml), getWrapperValue(xml));
 			return m;
