@@ -88,7 +88,7 @@ public class XmlUtil {
 							|| f.getType() == boolean.class || f.getType() == java.lang.Boolean.class
 							|| f.getType() == java.lang.String.class || f.getType() == java.lang.Character.class) {
 						str.add("<").add(n0).add(">").add(f.get(o)).add("</").add(n0).add(">");
-					} else if (f.getType().isArray()) {
+					} else if (f.getType() == java.util.List.class || f.getType() == java.util.ArrayList.class) {
 						str.add("<").add(n0).add(">");
 						List<?> os = (List<?>) f.get(o);
 						for (Object o0 : os) {
