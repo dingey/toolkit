@@ -33,7 +33,6 @@ public class XmlUtil {
 		return o;
 	}
 
-	@SuppressWarnings("unchecked")
 	private static <T> void set(Map<String, Object> m, T o) {
 		ClassUtil.setObjectFieldsValue(m, o);
 	}
