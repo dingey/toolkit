@@ -1,5 +1,7 @@
 package com.di.toolkit;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +25,34 @@ public class XmlUtil {
 			o = (T) m;
 		} else {
 			try {
+				Map<String, Object> m = toMap(xml);
 				o = cl.newInstance();
+				set(m, o);
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}
 		return o;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> void set(Map<String, Object> m, T o) {
+		Map<String, Object> m0 = (Map<String, Object>) m.get("element attributes");
+		m.remove("element attributes");
+		if (m0 != null) {
+			try {
+				Field f = o.getClass().getDeclaredField("attributes");
+				f.setAccessible(true);
+				Class<?> c1 = f.getType();
+				Object fo = c1.getConstructor().newInstance();
+				ClassUtil.setObjectFieldsValue(m0, fo);
+				f.set(o, fo);
+			} catch (NoSuchFieldException | SecurityException | InstantiationException | IllegalAccessException
+					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+		ClassUtil.setObjectFieldsValue(m, o);
 	}
 
 	public static Map<String, Object> toMap(String xml) {
