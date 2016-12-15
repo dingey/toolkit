@@ -140,6 +140,7 @@ public class XmlUtil {
 	public static Map<String, Object> toMap(String xml) {
 		Map<String, Object> m = new HashMap<>();
 		m.put("attributes", getAttributes(xml));
+		m.put("element name", getWrapperName(xml));
 		if (getWrapperValue(xml).indexOf("<") == -1) {
 			m.put(getWrapperName(xml), getWrapperValue(xml));
 			return m;
