@@ -64,7 +64,7 @@ public class ClassCreate {
 					if (vs.get(0).getClass() == java.util.Map.class
 							|| vs.get(0).getClass() == java.util.HashMap.class) {
 						Map<?, ?> m0 = (Map<?, ?>) vs.get(0);
-						innerClass.add(createInnerClass(m0, name));
+						innerClass.add(createInnerClass(m0, k0));
 					}
 				}
 			}
