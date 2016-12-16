@@ -140,7 +140,7 @@ public class JsonUtil {
 
 	private static Map<String, Object> toMap(String str) {
 		HashMap<String, Object> m = new HashMap<>();
-		String s0 = str.substring(str.indexOf("{") + 1, str.lastIndexOf("}"));
+		String s0 = str.substring(str.indexOf("{") + 1, str.lastIndexOf("}")).trim();
 		for (String s : split(s0)) {
 			m.put(s.substring(0, s.indexOf(":") - 1).replaceAll("\"", "").trim(),
 					val(s.substring(s.indexOf(":") + 1).trim()));
@@ -149,7 +149,7 @@ public class JsonUtil {
 	}
 
 	private static List<Object> toList(String str) {
-		String s0 = str.substring(str.indexOf("[") + 1, str.lastIndexOf("]"));
+		String s0 = str.substring(str.indexOf("[") + 1, str.lastIndexOf("]")).trim();
 		List<Object> ls = new ArrayList<>();
 		if (s0.startsWith("{")) {
 			for (String s1 : splitList(s0)) {
