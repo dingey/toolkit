@@ -100,4 +100,10 @@ public class ClassCreate {
 		Map<String, Object> map = XmlUtil.toMap(xml);
 		createClass(map, packag, path, xml.substring(xml.indexOf("<") + 1, xml.indexOf(">")));
 	}
+
+	public static void createFromJson(String json, String packag, String path) {
+		@SuppressWarnings("unchecked")
+		Map<String, Object> map = JsonUtil.toObject(json, Map.class);
+		createClass(map, packag, path, "root");
+	}
 }
