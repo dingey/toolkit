@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.di.toolkit.data.annotation.Alias;
+
 /**
  * @author di
  */
@@ -205,25 +207,33 @@ public class JsonUtil {
 			Field[] fs = o.getClass().getDeclaredFields();
 			for (Field f : fs) {
 				f.setAccessible(true);
+				String n = f.getName();
+				if (f.isAnnotationPresent(Alias.class)) {
+					if (!f.getAnnotation(Alias.class).json().isEmpty()) {
+						n = f.getAnnotation(Alias.class).json();
+					} else if (!f.getAnnotation(Alias.class).value().isEmpty()) {
+						n = f.getAnnotation(Alias.class).value();
+					}
+				}
 				if (f.get(o) == null)
 					continue;
 				if (f.getType() == byte.class || f.getType() == java.lang.Byte.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getByte(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getByte(o))).append(",");
 				} else if (f.getType() == short.class || f.getType() == java.lang.Short.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getShort(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getShort(o))).append(",");
 				} else if (f.getType() == int.class || f.getType() == java.lang.Integer.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getInt(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getInt(o))).append(",");
 				} else if (f.getType() == long.class || f.getType() == java.lang.Long.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getLong(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getLong(o))).append(",");
 				} else if (f.getType() == double.class || f.getType() == java.lang.Double.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getDouble(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getDouble(o))).append(",");
 				} else if (f.getType() == float.class || f.getType() == java.lang.Float.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getFloat(o))).append(",");
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getFloat(o))).append(",");
 				} else if (f.getType() == boolean.class || f.getType() == java.lang.Boolean.class) {
-					s.append("\"").append(f.getName()).append("\":").append(String.valueOf(f.getBoolean(o)))
+					s.append("\"").append(n).append("\":").append(String.valueOf(f.getBoolean(o)))
 							.append(",");
 				} else if (f.getType() == java.util.Date.class) {
-					s.append("\"").append(f.getName()).append("\":\"")
+					s.append("\"").append(n).append("\":\"")
 							.append(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(f.get(o))).append("\",");
 				} else if (f.getType() == java.util.Collection.class || f.getType() == java.util.List.class
 						|| f.getType() == java.util.ArrayList.class) {
@@ -232,12 +242,12 @@ public class JsonUtil {
 					for (Object object : os) {
 						s1.append(toJson(object)).append(",");
 					}
-					s.append("\"").append(f.getName()).append("\":[")
+					s.append("\"").append(n).append("\":[")
 							.append(s1.toString().substring(0, s1.length() - 1)).append("],");
 				} else if (f.getType() == java.lang.String.class) {
-					s.append("\"").append(f.getName()).append("\":\"").append((String) f.get(o)).append("\",");
+					s.append("\"").append(n).append("\":\"").append((String) f.get(o)).append("\",");
 				} else if (f.getType() instanceof Object) {
-					s.append("\"").append(f.getName()).append("\":").append(toJson(f.get(o))).append(",");
+					s.append("\"").append(n).append("\":").append(toJson(f.get(o))).append(",");
 				}
 			}
 			s = new StringBuilder(s.toString().substring(0, s.length() - 1));
