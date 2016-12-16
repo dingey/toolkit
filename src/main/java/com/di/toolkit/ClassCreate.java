@@ -61,8 +61,11 @@ public class ClassCreate {
 			if (v.getClass() == java.util.List.class || v.getClass() == java.util.ArrayList.class) {
 				List<?> vs = (List<?>) v;
 				if (vs.size() > 0) {
-					Map<?, ?> m0 = (Map<?, ?>) vs.get(0);
-					innerClass.add(createInnerClass(m0, name));
+					if (vs.get(0).getClass() == java.util.Map.class
+							|| vs.get(0).getClass() == java.util.HashMap.class) {
+						Map<?, ?> m0 = (Map<?, ?>) vs.get(0);
+						innerClass.add(createInnerClass(m0, name));
+					}
 				}
 			}
 		}
@@ -74,7 +77,9 @@ public class ClassCreate {
 		if (o.getClass() == java.util.List.class || o.getClass() == java.util.ArrayList.class) {
 			String n = k.toString();
 			List<?> l = (List<?>) o;
-			if (!l.isEmpty() && ((Map<?, ?>) l.get(0)).get("element name") != null
+			if (!l.isEmpty() && l.get(0).getClass() == java.lang.String.class) {
+				return "java.util.List<String>";
+			} else if (!l.isEmpty() && ((Map<?, ?>) l.get(0)).get("element name") != null
 					&& !((Map<?, ?>) l.get(0)).get("element name").toString().isEmpty()) {
 				n = ((Map<?, ?>) l.get(0)).get("element name").toString();
 			} else if (n.endsWith("s")) {
