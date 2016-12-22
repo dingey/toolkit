@@ -174,7 +174,7 @@ public class HttpURLConnectionUtil {
 			br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line;
 			while ((line = br.readLine()) != null) {
-				result += "\n" + line;
+				result += line;
 			}
 		} catch (Exception e) {
 			System.out.println("程序出现异常" + e);
