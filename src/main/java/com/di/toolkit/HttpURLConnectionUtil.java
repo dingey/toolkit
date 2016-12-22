@@ -50,7 +50,7 @@ public class HttpURLConnectionUtil {
 					if (v == null) {
 						continue;
 					}
-					sb.append("\r\n").append(BOUNDARY).append("\r\n");
+					sb.append("\r\n--").append(BOUNDARY).append("\r\n");
 					if (v.getClass() == java.io.File.class) {
 						File file = (File) v;
 						String fileName = file.getName();
@@ -70,7 +70,7 @@ public class HttpURLConnectionUtil {
 					}
 				}
 			}
-			sb.append("\r\n" + BOUNDARY + "\r\n");
+			sb.append("\r\n--" + BOUNDARY + "--\r\n");
 			conn.setRequestProperty("Content-Length", sb.toString().getBytes().length + "");
 			OutputStream out = conn.getOutputStream();
 			out.write(sb.toString().getBytes());
@@ -82,7 +82,7 @@ public class HttpURLConnectionUtil {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
-				strBuf.append(line).append("\n");
+				strBuf.append(line);
 			}
 			res = strBuf.toString();
 			reader.close();
