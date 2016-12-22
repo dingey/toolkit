@@ -140,7 +140,7 @@ public class HttpURLConnectionUtil {
 			in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line;
 			while ((line = in.readLine()) != null) {
-				result += "\n" + line;
+				result += line;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
