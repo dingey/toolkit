@@ -50,7 +50,7 @@ public class HttpURLConnectionUtil {
 					if (v == null) {
 						continue;
 					}
-					sb.append("\r\n").append(BOUNDARY).append("\r\n");
+					sb.append("\r\n--").append(BOUNDARY).append("\r\n");
 					if (v.getClass() == java.io.File.class) {
 						File file = (File) v;
 						String fileName = file.getName();
@@ -70,7 +70,7 @@ public class HttpURLConnectionUtil {
 					}
 				}
 			}
-			sb.append("\r\n" + BOUNDARY + "\r\n");
+			sb.append("\r\n--" + BOUNDARY + "--\r\n");
 			conn.setRequestProperty("Content-Length", sb.toString().getBytes().length + "");
 			OutputStream out = conn.getOutputStream();
 			out.write(sb.toString().getBytes());
@@ -82,7 +82,7 @@ public class HttpURLConnectionUtil {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
-				strBuf.append(line).append("\n");
+				strBuf.append(line);
 			}
 			res = strBuf.toString();
 			reader.close();
@@ -103,10 +103,11 @@ public class HttpURLConnectionUtil {
 				e.printStackTrace();
 			}
 		}
+		String params = sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : "";
 		if (url.startsWith("https")) {
-			return https(url, "get", sb.toString().substring(0, sb.toString().length() - 1));
+			return https(url, "get", params);
 		}
-		return sendGet(url, sb.toString().substring(0, sb.toString().length() - 1));
+		return sendGet(url, params);
 	}
 
 	public static <T extends Map<String, ?>> String post(String url, T args) {
@@ -119,10 +120,11 @@ public class HttpURLConnectionUtil {
 				e.printStackTrace();
 			}
 		}
+		String params = sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : "";
 		if (url.startsWith("https")) {
-			return https(url, "post", sb.toString().substring(0, sb.toString().length() - 1));
+			return https(url, "post", params);
 		}
-		return sendPost(url, sb.toString().substring(0, sb.toString().length() - 1));
+		return sendPost(url, params);
 	}
 
 	public static String sendGet(String url, String params) {
