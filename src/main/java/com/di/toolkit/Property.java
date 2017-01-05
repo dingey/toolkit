@@ -15,7 +15,7 @@ public class Property {
 	private HashMap<String, String> props;
 	private String fileName;
 
-	Property(String fileName) {
+	public Property(String fileName) {
 		if (fileName.indexOf(".") == -1) {
 			fileName = fileName + ".properties";
 		}

@@ -18,6 +18,7 @@ public class RuntimeUtil {
 		try {
 			process = runtime.exec(filePath);
 		} catch (final Exception e) {
+			e.printStackTrace();
 			System.out.println("Error exec!");
 		}
 		return process;
