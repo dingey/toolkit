@@ -26,6 +26,26 @@ public class TwoColorCompare {
 		return r;
 	}
 
+	public static Result compare_(BufferedImage img, int range) {
+		Result r = new Result();
+		r.setWidth(img.getWidth());
+		int y = img.getHeight() / 2;
+		int count = 0;
+		for (int i = 0; i < r.getWidth(); i++) {
+			Pixel p0 = BufferedImageUtil.getPixel(img, 0, y);
+			Pixel p1 = BufferedImageUtil.getPixel(img, i, y);
+			if (Math.abs(p1.getRed() - p0.getRed()) < range && Math.abs(p1.getGreen() - p0.getGreen()) < range
+					&& Math.abs(p1.getBlue() - p0.getBlue()) < range) {
+				count++;
+			}
+		}
+		r.setLeft(count);
+		r.setRight(r.getWidth() - count);
+		r.setLeftPercent((float) count / (float) r.getWidth());
+		r.setRightPercent(1 - r.getLeftPercent());
+		return r;
+	}
+
 	public static Result compare(BufferedImage img) {
 		return compare(img, 5);
 	}
