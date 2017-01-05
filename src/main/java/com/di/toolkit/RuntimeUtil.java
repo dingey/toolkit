@@ -5,7 +5,8 @@ package com.di.toolkit;
  */
 public class RuntimeUtil {
 	/**
-	 * 调用其他的可执行文件，例如：自己制作的exe，或是 下载 安装的软件.
+	 * Call other executable files, such as: make their own exe, or download and
+	 * install the software.
 	 * 
 	 * @param filePath
 	 *            C:\\Program Files\\Notepad++\\notepad++.exe
