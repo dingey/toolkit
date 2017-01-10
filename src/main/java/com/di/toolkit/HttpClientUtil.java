@@ -11,9 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -24,6 +27,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -90,6 +94,22 @@ public class HttpClientUtil {
 			}
 		}
 		return res;
+	}
+
+	public static String postString(String url, String request) {
+		String content = null;
+		try {
+			HttpClient httpClient = HttpClients.createDefault();
+			HttpPost post = new HttpPost(url);
+			StringEntity postingString = new StringEntity(request);// json传递
+			post.setEntity(postingString);
+			post.setHeader("Content-type", "application/json");
+			HttpResponse response = httpClient.execute(post);
+			content = EntityUtils.toString(response.getEntity());
+		} catch (ParseException | IOException e) {
+			e.printStackTrace();
+		}
+		return content;
 	}
 
 	public static String postForm(String url, HashMap<String, String> params) {

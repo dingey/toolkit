@@ -179,7 +179,6 @@ public class HttpURLConnectionUtil {
 				result += line;
 			}
 		} catch (Exception e) {
-			System.out.println("程序出现异常" + e);
 			e.printStackTrace();
 		} finally {
 			try {
@@ -285,5 +284,68 @@ public class HttpURLConnectionUtil {
 		public X509Certificate[] getAcceptedIssuers() {
 			return sunJSSEX509TrustManager.getAcceptedIssuers();
 		}
+	}
+
+	public enum PostContentTypeEnum {
+		application("application/x-www-form-urlencoded"), multipart("multipart/form-data"), json(
+				"application/json"), xml("text/xml");
+
+		private PostContentTypeEnum(String value) {
+			this.value = value;
+		}
+
+		private String value;
+
+		public String getValue() {
+			return value;
+		}
+	}
+
+	public static String post(String url, String request, PostContentTypeEnum postContentTypeEnum) {
+		PrintWriter out = null;
+		BufferedReader br = null;
+		String result = "";
+		try {
+			URL realURL = new URL(url);
+			URLConnection conn = realURL.openConnection();
+			conn.setRequestProperty("accept", "*/*");
+			conn.setRequestProperty("connection", "Keep-Alive");
+			conn.setRequestProperty("user-agent", "Mozilla/4.0(compatible;MSIE)");
+			switch (postContentTypeEnum.getValue()) {
+			case "application/json":
+				conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+				break;
+			case "text/xml":
+				conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+				break;
+			default:
+				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+				break;
+			}
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			out = new PrintWriter(conn.getOutputStream());
+			out.print(request);
+			out.flush();
+			br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 }
