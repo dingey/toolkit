@@ -22,4 +22,26 @@ public class BufferedImageUtil {
 		}
 		img.setRGB(x, y, rgb);
 	}
+
+	public static BufferedImage binary(BufferedImage img) {
+		BufferedImage bi = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 0; j < img.getHeight(); j++) {
+				int rgb = img.getRGB(i, j);
+				bi.setRGB(i, j, rgb);
+			}
+		}
+		return bi;
+	}
+
+	public static BufferedImage gray(BufferedImage img) {
+		BufferedImage bi = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 0; j < img.getHeight(); j++) {
+				int rgb = img.getRGB(i, j);
+				bi.setRGB(i, j, rgb);
+			}
+		}
+		return bi;
+	}
 }
