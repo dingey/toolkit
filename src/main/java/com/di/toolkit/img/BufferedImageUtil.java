@@ -1,11 +1,18 @@
 package com.di.toolkit.img;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * @author di
  */
 public class BufferedImageUtil {
+	public static final int BLACK_RGB = -16777216;
+	public static final int WHITE_RGB = -1;
+
 	public static Pixel getPixel(BufferedImage img, int x, int y) {
 		Object data = img.getRaster().getDataElements(x, y, null);
 		Pixel p = new Pixel(x, y);
@@ -43,5 +50,22 @@ public class BufferedImageUtil {
 			}
 		}
 		return bi;
+	}
+
+	public static BufferedImage read(String path) {
+		try {
+			return ImageIO.read(new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void save(BufferedImage img, String path) {
+		try {
+			ImageIO.write(img, path.substring(path.lastIndexOf(".") + 1), new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
