@@ -95,6 +95,7 @@ public class BufferedImageUtil {
 		}
 		return null;
 	}
+<<<<<<< HEAD
 
 	public static boolean isSimilar(Pixel p1, Pixel p2, int range) {
 		if (Math.abs(p1.getRed() - p2.getRed()) < range && Math.abs(p1.getRed() - p2.getRed()) < range
@@ -103,4 +104,6 @@ public class BufferedImageUtil {
 		}
 		return false;
 	}
+=======
+>>>>>>> branch 'master' of https://github.com/dingey/toolkit.git
 }
