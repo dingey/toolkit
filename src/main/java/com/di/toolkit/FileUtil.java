@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * @author di
  */
 public class FileUtil {
-	public void writeToFile(String path, String content) {
+	public static void writeToFile(String path, String content) {
 		try {
 			File f = new File(path);
 			if (!f.exists()) {
@@ -25,7 +25,7 @@ public class FileUtil {
 		}
 	}
 
-	public void save(File f, String nameAndPath) {
+	public static void save(File f, String nameAndPath) {
 		InputStream in = null;
 		OutputStream out = null;
 		try {
@@ -47,5 +47,20 @@ public class FileUtil {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static String readAsString(String path, String format) {
+		String str = "";
+		try {
+			FileInputStream in = new FileInputStream(path);
+			int size = in.available();
+			byte[] buffer = new byte[size];
+			in.read(buffer);
+			in.close();
+			str = new String(buffer, format == null ? "utf-8" : format);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return str;
 	}
 }
