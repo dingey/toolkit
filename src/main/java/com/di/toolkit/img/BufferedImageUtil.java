@@ -68,4 +68,20 @@ public class BufferedImageUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static BufferedImage binary(BufferedImage img, int range) {
+		BufferedImage bi = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 0; j < img.getHeight(); j++) {
+				Pixel p = getPixel(img, i, j);
+				if (((255 - p.getRed()) <= range) && ((255 - p.getGreen()) <= range)
+						&& ((255 - p.getBlue()) <= range)) {
+					bi.setRGB(i, j, WHITE_RGB);
+				} else {
+					bi.setRGB(i, j, BLACK_RGB);
+				}
+			}
+		}
+		return bi;
+	}
 }
