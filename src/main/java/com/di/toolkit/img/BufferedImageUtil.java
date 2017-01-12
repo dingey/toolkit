@@ -3,6 +3,7 @@ package com.di.toolkit.img;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 
@@ -83,5 +84,23 @@ public class BufferedImageUtil {
 			}
 		}
 		return bi;
+	}
+
+	public static BufferedImage readByRelativePath(String relativePath) {
+		try {
+			String pathname = Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath();
+			return ImageIO.read(new File(pathname + relativePath));
+		} catch (URISyntaxException | IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static boolean isSimilar(Pixel p1, Pixel p2, int range) {
+		if (Math.abs(p1.getRed() - p2.getRed()) < range && Math.abs(p1.getRed() - p2.getRed()) < range
+				&& Math.abs(p1.getRed() - p2.getRed()) < range) {
+			return true;
+		}
+		return false;
 	}
 }
