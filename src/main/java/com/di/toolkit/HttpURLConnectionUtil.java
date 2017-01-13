@@ -316,7 +316,7 @@ public class HttpURLConnectionUtil {
 				conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
 				break;
 			case "text/xml":
-				conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+				conn.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
 				break;
 			default:
 				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
