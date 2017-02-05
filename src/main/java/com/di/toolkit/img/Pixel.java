@@ -10,6 +10,10 @@ public class Pixel {
 	int green;
 	int blue;
 
+	public Pixel() {
+		super();
+	}
+
 	public Pixel(int x, int y) {
 		super();
 		this.x = x;
