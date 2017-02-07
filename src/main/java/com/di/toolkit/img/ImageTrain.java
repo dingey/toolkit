@@ -63,7 +63,7 @@ public class ImageTrain {
 					Char c = new Char();
 					c.setHeight((maxY - minY));
 					c.setWidth((maxX - minX));
-					c.setC(name.substring(0, 1));
+					c.setC(name);
 					c.setKeyPoint(count);
 					c.setPixels(temps);
 					chars.add(c);
