@@ -54,7 +54,7 @@ public class ImageRecognition {
 							if (d > ratio) {
 								System.out.println(c.getC() + " : " + count + " / " + c.getKeyPoint() + " = "
 										+ (double) count / (double) c.getKeyPoint());
-								s.add(c.getC());
+								s.add(c.getC().substring(0, 1));
 								count0++;
 							}
 							if (count0 == num) {
