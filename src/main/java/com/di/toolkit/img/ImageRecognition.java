@@ -49,13 +49,14 @@ public class ImageRecognition {
 										count++;
 									}
 								}
-							}
-							double d = (double) count / (double) c.getKeyPoint();
-							if (d > ratio) {
-								System.out.println(c.getC() + " : " + count + " / " + c.getKeyPoint() + " = "
-										+ (double) count / (double) c.getKeyPoint());
-								s.add(c.getC());
-								count0++;
+								double d = (double) count / (double) c.getKeyPoint();
+								if (d > ratio) {
+									System.out.println(c.getC() + " : " + count + " / " + c.getKeyPoint() + " = "
+											+ (double) count / (double) c.getKeyPoint());
+									s.add(c.getC());
+									count0++;
+									break;
+								}
 							}
 							if (count0 == num) {
 								return s.toString();
