@@ -19,12 +19,15 @@ public class ImageTrain {
 	public static void train(String path) {
 		File f = new File(path);
 		if (!f.isDirectory() || !f.exists()) {
-			throw new RuntimeException("������ļ�Ӧ��ΪĿ¼���߲�����");
+			throw new RuntimeException("");
 		} else {
 			String[] files = f.list();
 			List<Char> chars = new ArrayList<Char>();
 			for (String n : files) {
 				String pa = f.getAbsolutePath() + File.separator + n;
+				if (new File(pa).isDirectory()) {
+					continue;
+				}
 				String name = n.substring(0, n.lastIndexOf("."));
 				if (pa.endsWith("jpg") || pa.endsWith("bmp") || pa.endsWith("png") || pa.endsWith("tif")) {
 					BufferedImage img = BufferedImageUtil.read(pa);
@@ -61,7 +64,7 @@ public class ImageTrain {
 					Char c = new Char();
 					c.setHeight((maxY - minY));
 					c.setWidth((maxX - minX));
-					c.setC(name);
+					c.setC(name.substring(0, 1));
 					c.setKeyPoint(count);
 					c.setPixels(temps);
 					chars.add(c);
