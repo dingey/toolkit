@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.di.toolkit.FileUtil;
-import com.di.toolkit.JacksonUtil;
 import com.di.toolkit.img.BufferedImageUtil;
 import com.di.toolkit.img.Pixel;
 
@@ -72,7 +71,7 @@ public class ImageTrain {
 				}
 			}
 			TrainData td = new TrainData(chars);
-			FileUtil.writeToFile(path + "train.data", JacksonUtil.pojoToJson(td));
+			FileUtil.writeToFile(path + "train.data", TrainDataSerilization.serilize(td));
 		}
 	}
 

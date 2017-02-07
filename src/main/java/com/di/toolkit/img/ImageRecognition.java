@@ -3,7 +3,6 @@ package com.di.toolkit.img;
 import java.awt.image.BufferedImage;
 
 import com.di.toolkit.FileUtil;
-import com.di.toolkit.JacksonUtil;
 import com.di.toolkit.Str;
 import com.di.toolkit.img.BufferedImageUtil;
 import com.di.toolkit.img.Pixel;
@@ -24,7 +23,7 @@ public class ImageRecognition {
 
 	public static String parse(String dataPath, String targetPath, int num, Double ratio) {
 		String content = FileUtil.readAsString(dataPath, "GBK");
-		TrainData td = JacksonUtil.jsonToPojo(content, TrainData.class);
+		TrainData td = TrainDataSerilization.deSerilize(content);
 		BufferedImage img = BufferedImageUtil.read(targetPath);
 		Pixel background = BufferedImageUtil.getPixel(img, 0, 0);
 		Str s = new Str();
