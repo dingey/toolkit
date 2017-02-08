@@ -22,6 +22,6 @@ public class RecognitionTest {
 	public void reconition() {
 		// System.out.println(ImageRecognition.parse("D:/ocr/train3/train.data",
 		// "D:/ocr/train3/a1.jpg"));
-		System.out.println(ImageRecognition.parse("D:/ocr/train3/train.data", "D:/ocr/train3/a.jpg", 3, null));
+		System.out.println(ImageRecognition.parseBest("D:/ocr/train3/train.data", "D:/ocr/train3/a.jpg"));
 	}
 }
