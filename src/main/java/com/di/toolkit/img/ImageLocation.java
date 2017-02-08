@@ -25,6 +25,12 @@ public class ImageLocation {
 								count0++;
 							}
 						}
+						if (100 * (count - count0) / count > 2) {
+							break;
+						}
+					}
+					if (100 * (count - count0) / count > 2) {
+						break;
 					}
 				}
 				if (100 * count0 / count > 98) {
