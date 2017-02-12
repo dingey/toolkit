@@ -107,4 +107,21 @@ public class BufferedImageUtil {
 		}
 		return false;
 	}
+	
+	public static BufferedImage cutImage(BufferedImage img,int x,int y,int width,int height){
+		System.out.println(img.getWidth()+" : "+img.getHeight());
+		int w=img.getWidth()>=(x+width)?width:(img.getWidth()-x);
+		int h=img.getHeight()>=(y+height)?height:(img.getHeight()-y);
+		if(x<img.getWidth()&&y<img.getHeight()){
+			BufferedImage b=new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+			for(int x0=x;x0<w+x;x0++){
+				for(int y0=y;y0<h+y;y0++){
+					Pixel p = getPixel(img, x0, y0);
+					setColor(b, x0-x, y0-y, p.getRed(), p.getGreen(), p.getBlue());
+				}
+			}
+			return b;
+		}
+		return img;
+	}
 }
