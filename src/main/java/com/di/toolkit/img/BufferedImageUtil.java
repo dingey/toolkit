@@ -109,7 +109,6 @@ public class BufferedImageUtil {
 	}
 	
 	public static BufferedImage cutImage(BufferedImage img,int x,int y,int width,int height){
-		System.out.println(img.getWidth()+" : "+img.getHeight());
 		int w=img.getWidth()>=(x+width)?width:(img.getWidth()-x);
 		int h=img.getHeight()>=(y+height)?height:(img.getHeight()-y);
 		if(x<img.getWidth()&&y<img.getHeight()){
