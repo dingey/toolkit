@@ -123,4 +123,12 @@ public class BufferedImageUtil {
 		}
 		return img;
 	}
+	
+	public static boolean isContains(BufferedImage small,BufferedImage large){
+		int[] locate = ImageLocation.locate(small, large);
+		if(locate[0]<locate[2]&&locate[1]<locate[3]){
+			return true;
+		}
+		return false;
+	}
 }
