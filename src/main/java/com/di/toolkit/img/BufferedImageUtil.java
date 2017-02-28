@@ -93,6 +93,7 @@ public class BufferedImageUtil {
 	public static BufferedImage readByRelativePath(String relativePath) {
 		try {
 			String pathname = Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath();
+			pathname = pathname.replaceFirst("test-classes", "classes");
 			return ImageIO.read(new File(pathname + relativePath));
 		} catch (URISyntaxException | IOException e) {
 			e.printStackTrace();
@@ -107,26 +108,26 @@ public class BufferedImageUtil {
 		}
 		return false;
 	}
-	
-	public static BufferedImage cutImage(BufferedImage img,int x,int y,int width,int height){
-		int w=img.getWidth()>=(x+width)?width:(img.getWidth()-x);
-		int h=img.getHeight()>=(y+height)?height:(img.getHeight()-y);
-		if(x<img.getWidth()&&y<img.getHeight()){
-			BufferedImage b=new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-			for(int x0=x;x0<w+x;x0++){
-				for(int y0=y;y0<h+y;y0++){
+
+	public static BufferedImage cutImage(BufferedImage img, int x, int y, int width, int height) {
+		int w = img.getWidth() >= (x + width) ? width : (img.getWidth() - x);
+		int h = img.getHeight() >= (y + height) ? height : (img.getHeight() - y);
+		if (x < img.getWidth() && y < img.getHeight()) {
+			BufferedImage b = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+			for (int x0 = x; x0 < w + x; x0++) {
+				for (int y0 = y; y0 < h + y; y0++) {
 					Pixel p = getPixel(img, x0, y0);
-					setColor(b, x0-x, y0-y, p.getRed(), p.getGreen(), p.getBlue());
+					setColor(b, x0 - x, y0 - y, p.getRed(), p.getGreen(), p.getBlue());
 				}
 			}
 			return b;
 		}
 		return img;
 	}
-	
-	public static boolean isContains(BufferedImage small,BufferedImage large){
+
+	public static boolean isContains(BufferedImage small, BufferedImage large) {
 		int[] locate = ImageLocation.locate(small, large);
-		if(locate[0]<locate[2]&&locate[1]<locate[3]){
+		if (locate[0] < locate[2] && locate[1] < locate[3]) {
 			return true;
 		}
 		return false;
