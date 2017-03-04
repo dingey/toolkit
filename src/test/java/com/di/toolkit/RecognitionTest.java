@@ -12,7 +12,7 @@ public class RecognitionTest {
 	@Test
 	public void test() {
 		// train();
-		reconition();
+//		reconition();
 	}
 
 	public void train() {

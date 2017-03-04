@@ -18,8 +18,8 @@ import com.di.toolkit.img.TwoColorCompare.Result;
 public class TwoColorCompareTest {
 	@Test
 	public void test() {
-		t1();
-		t2();
+//		t1();
+//		t2();
 	}
 
 	public void t1() {
