@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -82,10 +84,35 @@ public class RobotUtil {
 		getRobot().keyRelease(KeyEvent.VK_CONTROL);
 	}
 
+	public static void mouseWheel(int times) {
+		for (int i = 0; i < times; i++) {
+			getRobot().mouseWheel(1);
+		}
+	}
+
 	public static void press(int... keycodes) {
 		for (int i : keycodes) {
 			press(i);
 		}
+	}
+
+	public static void press(String s) {
+		for (char c : s.toCharArray()) {
+			if (Character.isUpperCase(c)) {
+				pressWithShift(KeyEvent.getExtendedKeyCodeForChar(c));
+			} else {
+				getRobot().keyPress(KeyEvent.getExtendedKeyCodeForChar(c));
+			}
+		}
+	}
+
+	public static void inputString(String str) {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(new StringSelection(str), null);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
 	}
 
 	public static Robot getRobot() {
