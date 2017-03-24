@@ -197,4 +197,83 @@ public class DateUtil {
 	public static Date getHoursLater(int hours) {
 		return getMinutesLater(hours * 60);
 	}
+    /**
+     * 获取本月第一天零点时间
+     * @return
+     */
+    public static Date getCurrentMonthFirstDate(){
+       return getMonthFirstDate(0);
+    }
+    /**
+     * 获取本月最后一秒时间
+     * @return
+     */
+    public static Date getCurrentMonthLastDate(){
+        return getMonthLastDate(0);
+    }
+    /**
+     * 获取距本月n月后该月第一天零点时间
+     * @param months
+     * @return
+     */
+    public static Date getMonthFirstDate(int months){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, months);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.DAY_OF_MONTH,1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取距本月n月后该月最后一秒时间
+     * @param months
+     * @return
+     */
+    public static Date getMonthLastDate(int months){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, months);
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取本月是本年的第月
+     *
+     * @return
+     */
+    public static int getCurrentMonthIndex(){
+        SimpleDateFormat sdf=new SimpleDateFormat("MM");
+        String format = sdf.format(new Date());
+        return Integer.valueOf(format);
+    }
+
+    public static List<Date[]> getCurrentYearMonts(){
+        List<Date[]> dates=new ArrayList<>();
+        int monthIndex = getCurrentMonthIndex();
+        for(int i=0;i<12;i++){
+            Date[] dts={getMonthFirstDate(i-monthIndex+1),getMonthLastDate(i-monthIndex+1)};
+            dates.add(dts);
+        }
+        return dates;
+    }
+
+    public static List<Date[]> getPreviousYearMonts(){
+        List<Date[]> dates=new ArrayList<>();
+        int monthIndex = getCurrentMonthIndex();
+        for(int i=0;i<12;i++){
+            int month=monthIndex+11-i;
+            Date[] dts={getMonthFirstDate(-month),getMonthLastDate(-month)};
+            dates.add(dts);
+        }
+        return dates;
+    }
 }
