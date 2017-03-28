@@ -19,7 +19,7 @@ public class PoiXlsxUtil {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		int lastRowNum = sheet.getLastRowNum();
 		XSSFRow row0 = sheet.getRow(0);
-		for (int i = 1; i < lastRowNum; i++) {
+		for (int i = 1; i <= lastRowNum; i++) {
 			XSSFRow row1 = sheet.getRow(i);
 			LinkedHashMap<String, String> m = new LinkedHashMap<>();
 			for (int j = 0; j < row0.getLastCellNum(); j++) {
@@ -57,8 +57,7 @@ public class PoiXlsxUtil {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		String path="C:/Users/Administrator/Desktop/orders.xlsx";
-		List<LinkedHashMap<String, String>> l=getColumns(path);
-		writeToXlsx(l, "d:/out.xlsx");
+		List<LinkedHashMap<String, String>> columns = PoiXlsxUtil.getColumns("d:/tmp/a.xlsx");
+		System.out.println(columns.get(1).get("a"));
 	}
 }
