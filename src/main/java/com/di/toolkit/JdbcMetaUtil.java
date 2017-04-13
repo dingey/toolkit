@@ -57,6 +57,7 @@ public class JdbcMetaUtil {
 		ResultSet columnSet = getConn().getMetaData().getColumns(null, "%", tableName, "%");
 		List<Column> columns = new ArrayList<>();
 		List<Column> primaryColumns = new ArrayList<>();
+		List<Column> allColumns = new ArrayList<>();
 		while (columnSet.next()) {
 			Column c = new Column();
 			c.setName(columnSet.getString("COLUMN_NAME"));
@@ -70,9 +71,11 @@ public class JdbcMetaUtil {
 			} else {
 				columns.add(c);
 			}
+			allColumns.add(c);
 		}
 		table.setColumns(columns);
 		table.setPrimaryKeys(primaryColumns);
+		table.setAllColumns(allColumns);
 		return table;
 	}
 
@@ -91,6 +94,15 @@ public class JdbcMetaUtil {
 		private String name;
 		private List<Column> primaryKeys;
 		private List<Column> columns;
+		private List<Column> allColumns;
+		
+		public List<Column> getAllColumns() {
+			return allColumns;
+		}
+
+		public void setAllColumns(List<Column> allColumns) {
+			this.allColumns = allColumns;
+		}
 
 		public String getName() {
 			return name;
