@@ -42,7 +42,11 @@ public class Str {
 
 	public Str deleteLastChar() {
 		if (s != null && s.length() > 0) {
-			s.delete(s.length() - 1, s.length());
+			if (s.toString().endsWith("\n")&&s.length()>2) {
+				s.delete(s.length() - 3, s.length()-2);
+			} else {
+				s.delete(s.length() - 1, s.length());
+			}
 		}
 		return this;
 	}
