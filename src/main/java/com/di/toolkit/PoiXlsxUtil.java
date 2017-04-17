@@ -24,7 +24,7 @@ public class PoiXlsxUtil {
 			LinkedHashMap<String, String> m = new LinkedHashMap<>();
 			for (int j = 0; j < row0.getLastCellNum(); j++) {
 				try{
-				m.put(row0.getCell(j).getStringCellValue(), row1.getCell(j).getStringCellValue());
+				m.put(row0.getCell(j).getStringCellValue(), row1.getCell(j)==null?"":row1.getCell(j).getStringCellValue());
 				}catch(IllegalStateException ill){
 					m.put(row0.getCell(j).getStringCellValue(), row1.getCell(j).getNumericCellValue()+"");
 				}
