@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 
 /**
  * @author di
@@ -62,5 +63,30 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 		return str;
+	}
+
+	public static String readRelativeAsString(String relativePath, String format) {
+		String path = relativePath;
+		File f = new File(path);
+		if (!f.exists()) {
+			try {
+				path = Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+			path = path + relativePath;
+
+			f = new File(path);
+			if (!f.exists()) {
+				if (path.indexOf("test-classes") != -1) {
+					path = path.replaceFirst("test-classes", "classes");
+				}
+				f = new File(path);
+				if (!f.exists()) {
+					System.err.println(relativePath + " not found");
+				}
+			}
+		}
+		return readAsString(path, format);
 	}
 }
