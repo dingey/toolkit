@@ -1,5 +1,6 @@
 package com.di.toolkit;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -76,6 +77,7 @@ public class JdbcMetaUtil {
 		table.setColumns(columns);
 		table.setPrimaryKeys(primaryColumns);
 		table.setAllColumns(allColumns);
+		table.setComment(getComment(tableName));
 		return table;
 	}
 
@@ -90,12 +92,37 @@ public class JdbcMetaUtil {
 		return tables;
 	}
 
+	private static String getComment(String table) {
+		String comment = "";
+		try {
+			ResultSet rs = getConn().createStatement().executeQuery("SHOW CREATE TABLE " + table);
+			if (rs != null && rs.next()) {
+				String create = rs.getString(2);
+				int index = create.indexOf("COMMENT='");
+				if (index < 0) {
+					return "";
+				}
+				comment = create.substring(index + 9);
+				comment = comment.substring(0, comment.length() - 1);
+				try {
+					comment = new String(comment.getBytes("utf-8"));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+			rs.close();
+		} catch (SQLException e) {
+		} 
+		return comment;
+	}
+
 	public static class Table {
 		private String name;
 		private List<Column> primaryKeys;
 		private List<Column> columns;
 		private List<Column> allColumns;
-		
+		private String comment;
+
 		public List<Column> getAllColumns() {
 			return allColumns;
 		}
@@ -126,6 +153,14 @@ public class JdbcMetaUtil {
 
 		public void setPrimaryKeys(List<Column> primaryKeys) {
 			this.primaryKeys = primaryKeys;
+		}
+
+		public String getComment() {
+			return comment;
+		}
+
+		public void setComment(String comment) {
+			this.comment = comment;
 		}
 	}
 
@@ -217,9 +252,10 @@ public class JdbcMetaUtil {
 	}
 
 	public enum Type {
-		INT("int", "int"), CHAR("char", "String"), VARCHAR("varchar", "String"), TIME_STAMP("timestamp","java.util.Date"), 
-		DATE_TIME("datetime", "java.util.Date"), TINYINT("tinyint", "int"), BIT("bit","boolean"), BIGINT("bigint", "long"), 
-		DOUBLE("double","double"), DECIMAL("decimal", "java.math.BigDecimal"), FLOAT("float", "float");
+		INT("int", "int"), CHAR("char", "String"), VARCHAR("varchar", "String"), TIME_STAMP("timestamp",
+				"java.util.Date"), DATE_TIME("datetime", "java.util.Date"), TINYINT("tinyint", "int"), BIT("bit",
+						"boolean"), BIGINT("bigint", "long"), DOUBLE("double",
+								"double"), DECIMAL("decimal", "java.math.BigDecimal"), FLOAT("float", "float");
 		private String sql;
 		private String java;
 
