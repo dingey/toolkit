@@ -16,16 +16,33 @@ import java.util.Map;
  */
 public class JdbcMetaUtil {
 	static Connection conn;
+	public static String driver, url, username, password;
+
+	public static void setConfig(String url, String username, String password) {
+		JdbcMetaUtil.url = url;
+		JdbcMetaUtil.username = username;
+		JdbcMetaUtil.password = password;
+	}
 
 	private static Connection getConn() {
 		if (conn == null) {
 			Property property = new Property("jdbc.properties");
-			Driver driver;
+			if (url == null && url.isEmpty()) {
+				url = property.get("jdbc.url");
+			}
+			if (username == null || username.isEmpty()) {
+				username = property.get("jdbc.username");
+			}
+			if (password == null || password.isEmpty()) {
+				password = property.get("jdbc.password");
+			}
+			if(driver==null||driver.isEmpty()){
+				driver = DriverEnum.getByURL(url).name;
+			}
 			try {
-				driver = (Driver) Class.forName(property.get("jdbc.driver")).newInstance();
-				DriverManager.registerDriver(driver);
-				conn = DriverManager.getConnection(property.get("jdbc.url"), property.get("jdbc.username"),
-						property.get("jdbc.password"));
+				Driver driver1 = (Driver) Class.forName(driver).newInstance();
+				DriverManager.registerDriver(driver1);
+				conn = DriverManager.getConnection(url, username, password);
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -112,7 +129,7 @@ public class JdbcMetaUtil {
 			}
 			rs.close();
 		} catch (SQLException e) {
-		} 
+		}
 		return comment;
 	}
 
@@ -251,7 +268,7 @@ public class JdbcMetaUtil {
 		}
 	}
 
-	public enum Type {
+	public static enum Type {
 		INT("int", "int"), CHAR("char", "String"), VARCHAR("varchar", "String"), TIME_STAMP("timestamp",
 				"java.util.Date"), DATE_TIME("datetime", "java.util.Date"), TINYINT("tinyint", "int"), BIT("bit",
 						"boolean"), BIGINT("bigint", "long"), DOUBLE("double",
@@ -290,4 +307,37 @@ public class JdbcMetaUtil {
 		}
 	}
 
+	public static enum DriverEnum {
+		MYSQL("com.mysql.jdbc.Driver","jdbc:mysql"),
+		MS_SQL("net.sourceforge.jtds.jdbc.Driver","jdbc:jtds:sqlserver"),
+		MS_SQL1("net.sourceforge.jtds.jdbc.Driver","jdbc:jtds:sybase"),
+		ORACLE("oracle.jdbc.driver.OracleDriver","jdbc:oracle:thin"),
+		SYBASE("com.sybase.jdbc2.jdbc.SybDriver","jdbc:sybase:Tds"),
+		POSTGRESQL("org.postgresql.Driver","jdbc:postgresql");
+
+		private String name;
+		private String prefix;
+		
+		public String getName() {
+			return name;
+		}
+
+		public String getPrefix() {
+			return prefix;
+		}
+
+		private DriverEnum(String name,String prefix) {
+			this.name = name;
+			this.prefix=prefix;
+		}
+		
+		public static DriverEnum getByURL(String url) {
+			for (DriverEnum d : DriverEnum.values()) {
+				if (url.startsWith(d.getPrefix())) {
+					return d;
+				}
+			}
+			return DriverEnum.MYSQL;
+		}
+	}
 }
