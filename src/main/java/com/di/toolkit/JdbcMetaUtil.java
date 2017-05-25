@@ -27,7 +27,7 @@ public class JdbcMetaUtil {
 	private static Connection getConn() {
 		if (conn == null) {
 			Property property = new Property("jdbc.properties");
-			if (url == null && url.isEmpty()) {
+			if (url == null || url.isEmpty()) {
 				url = property.get("jdbc.url");
 			}
 			if (username == null || username.isEmpty()) {
