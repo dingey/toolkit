@@ -502,6 +502,11 @@ public class MvcGenerater {
 	}
 
 	private void out(String path, String content) {
+		File f=new File(path);
+		if(f.exists()){
+			System.err.println("mvc generator error (exists path): "+path);
+			return;
+		}
 		System.out.println(path);
 		FileUtil.writeToFile(path, content);
 	}
