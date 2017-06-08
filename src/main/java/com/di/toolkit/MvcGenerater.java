@@ -359,7 +359,7 @@ public class MvcGenerater {
 			s.line("                <input type=\"hidden\" id=\"pageNum\" name=\"pageNum\" value=\"${pageInfo.pageNum}\">");
 			s.line("                <input type=\"hidden\" id=\"pageSize\" name=\"pageSize\" value=\"${pageInfo.pageSize}\">");
 			s.line("                <div class=\"form-group\">");
-			s.line("                    <a type=\"button\" class=\"btn btn-primary\" onclick=\"edit(0)\">新建活动</a>");
+			s.line("                    <a type=\"button\" class=\"btn btn-primary\" onclick=\"edit(0)\">新建</a>");
 			s.line("                </div>");
 			s.line("            </form>");
 			s.line("        </div>");
@@ -389,7 +389,7 @@ public class MvcGenerater {
 			}
 			Column key = t.getPrimaryKeys().get(0);
 			String kn=StringUtil.firstCharLower(StringUtil.trimUnderlinedFirstCharUpper(key.getName()));
-			s.add("                        <td><a href=\"#\" class=\"btn btn-default\" onclick=\"edit('${p.").add(kn).line("}')\">编辑</a></td>");
+			s.add("                        <td><a href=\"#\" class=\"btn btn-default btn-xs\" onclick=\"edit('${p.").add(kn).line("}')\">编辑</a></td>");
 			s.line("                    </tr>");
 			s.line("                    </#list>");
 			s.line("                </tbody>");
@@ -409,7 +409,7 @@ public class MvcGenerater {
 			s.line("                <select style=\"height: 32px;\" id=\"pgSize\" onchange=\"changePgSize()\">");
 			s.line("                    <option value=\"10\" <#if pageInfo.pageSize==10>selected</#if>>10</option>");
 			s.line("                    <option value=\"20\" <#if pageInfo.pageSize==20>selected</#if>>20</option>");
-			s.line("                    <option value=\"20\" <#if pageInfo.pageSize==50>selected</#if>>50</option>");
+			s.line("                    <option value=\"50\" <#if pageInfo.pageSize==50>selected</#if>>50</option>");
 			s.line("                </select> 项 到第 <input type=\"text\"");
 			s.line("                                      style=\"width:48px;height: 32px;\" id=\"pgNum\"> 页");
 			s.line("                <button class=\"btn btn-default\" onclick=\"pageJunp()\">GO</button>");
@@ -458,9 +458,9 @@ public class MvcGenerater {
 				s.add("                        <input id=\"").add(cn).add("\" name=\"").add(cn).add("\" class=\"form-control\" type=\"text\"");
 				s.add(" value=\"${");
 				if(c.getType().getJava().equals("java.util.Date")){
-					s.add("(p.").add(cn).add("?string(\"yyyy-MM-dd hh:mm:ss\"))!");
+					s.add("(").add(className).add(".").add(cn).add("?string(\"yyyy-MM-dd HH:mm:ss\"))!");
 				}else{
-					s.add("p.").add(cn).add("!");
+					s.add("(").add(className).add(".").add(cn).add(")!");
 				}
 				s.line("}\">");
 				s.line("                    </div>");
