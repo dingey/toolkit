@@ -271,7 +271,7 @@ public class JdbcMetaUtil {
 	public static enum Type {
 		INT("INT", "int"),INT_UNSIGNED("INT UNSIGNED", "int"), BIGINT("BIGINT UNSIGNED", "long"),MEDIUMINT("MEDIUMINT UNSIGNED","int"), 
 		DOUBLE("double","double"), DECIMAL("decimal", "java.math.BigDecimal"), FLOAT("float", "float"),
-		TINYINT("tinyint", "int"), BIT("bit","boolean"),CHAR("char", "String"), 
+		TINYINT("tinyint", "int"),TINYINT_UNSIGNED("TINYINT UNSIGNED", "int"), BIT("bit","boolean"),CHAR("char", "String"), 
 		VARCHAR("varchar", "String"), TIME_STAMP("timestamp","java.util.Date"), DATE_TIME("datetime", "java.util.Date");
 		private String sql;
 		private String java;
