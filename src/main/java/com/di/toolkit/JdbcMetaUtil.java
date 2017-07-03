@@ -269,10 +269,10 @@ public class JdbcMetaUtil {
 	}
 
 	public static enum Type {
-		INT("int", "int"), CHAR("char", "String"), VARCHAR("varchar", "String"), TIME_STAMP("timestamp",
-				"java.util.Date"), DATE_TIME("datetime", "java.util.Date"), TINYINT("tinyint", "int"), BIT("bit",
-						"boolean"), BIGINT("bigint", "long"), DOUBLE("double",
-								"double"), DECIMAL("decimal", "java.math.BigDecimal"), FLOAT("float", "float");
+		INT("INT", "int"),INT_UNSIGNED("INT UNSIGNED", "int"), BIGINT("BIGINT UNSIGNED", "long"),MEDIUMINT("MEDIUMINT UNSIGNED","int"), 
+		DOUBLE("double","double"), DECIMAL("decimal", "java.math.BigDecimal"), FLOAT("float", "float"),
+		TINYINT("tinyint", "int"), BIT("bit","boolean"),CHAR("char", "String"), 
+		VARCHAR("varchar", "String"), TIME_STAMP("timestamp","java.util.Date"), DATE_TIME("datetime", "java.util.Date");
 		private String sql;
 		private String java;
 
